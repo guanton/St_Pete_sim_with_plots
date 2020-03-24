@@ -2,6 +2,7 @@ import array as arr
 import random
 import matplotlib.pyplot as plt
 import numpy as np
+import math
 
 
 
@@ -23,7 +24,10 @@ def run_simulation(batches, batch_size):
     return
 
 def make_plots(max_payout_bs, batch_payouts):
-    plt.plot(np.arange(batches), batch_payouts)
+    avg_batch_payouts = np.divide(batch_payouts, batch_size)
+    plt.plot(np.arange(batches), avg_batch_payouts)
+    plt.ylabel('average payout per game ($)')
+    plt.axhline(math.log2(batch_size)/2)
     plt.show()
     return
 
