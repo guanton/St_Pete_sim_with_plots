@@ -1,11 +1,14 @@
-import random
 import array as arr
+import random
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 
 def run_simulation(batches, batch_size):
-    global total_payout, max_payout, batch_payout, max_payout_b, batch_payouts
+    global total_payout, max_payout, batch_payout, max_payout_b, batch_payouts, max_payout_bs
     batch_payouts = arr.array('d', [])
+    max_payout_bs = arr.array('d', [])
     for i in range(batches):
         batch_payout = 0
         max_payout_b = 0
@@ -13,10 +16,17 @@ def run_simulation(batches, batch_size):
             run_game()
         total_payout = total_payout + batch_payout
         batch_payouts.append(batch_payout)
+        max_payout_bs.append(max_payout_b)
         if max_payout_b > max_payout:
             max_payout = max_payout_b
-    print(batch_payouts)
+    make_plots(max_payout_bs, batch_payouts)
     return
+
+def make_plots(max_payout_bs, batch_payouts):
+    plt.plot(np.arange(batches), batch_payouts)
+    plt.show()
+    return
+
 
 
 def run_game():
